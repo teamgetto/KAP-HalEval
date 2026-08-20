@@ -238,7 +238,12 @@ for _, row in df_summaries.iterrows():
         'generated_summary': row['original_summary'],
         'label': 0, 'hall_type_name': 'Grounded'
     })
-    ht = random.randint(1,4)
+ HALL_WEIGHTS = {1: 0.325, 2: 0.30, 3: 0.05, 4: 0.325}
+ ht = random.choices(
+    population=list(HALL_WEIGHTS.keys()),
+    weights=list(HALL_WEIGHTS.values()),
+    k=1
+ )[0]
     hname, hfunc = HALL_FUNCS[ht]
     htext, ok = hfunc(row['original_summary'])
     if not ok:
